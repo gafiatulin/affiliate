@@ -38,10 +38,9 @@ trait Routes extends Service {
                 pathPrefix("signup"){
                     pathPrefix("affiliate"){  
                         complete(signUp(ref).map{"OK: " + _})
-                    } ~
+                    } ~ 
                     {
-                        upR(ref)
-                        complete("Registred")
+                        complete(upR(ref).map{x => "Registred"})
                     }
                 }
             }

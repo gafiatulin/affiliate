@@ -27,7 +27,7 @@ trait Service extends RefCodeEntityTable with Config {
 
     def signUp(ref: String) = {
         val duid = UUID.nameUUIDFromBytes((databaseUrl + UUID.randomUUID().toString).getBytes()).toString.replaceAll("-", "")
-        val id = insert(RefCodeEntity(duid, Some(ref))).map{_.id}
+        val id = insert(RefCodeEntity(duid)).map{_.id}
         id.flatMap(x => upPR(ref))
         id
     }

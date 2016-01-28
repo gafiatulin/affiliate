@@ -24,7 +24,6 @@ trait Routes extends Service {
         } ~
         get{
             parameter("ref".?){ ref => 
-                println("Get",ref)
                 ref.foreach(upV(_))
                 pathPrefix("signup"){
                     pathPrefix("affiliate"){
@@ -36,7 +35,6 @@ trait Routes extends Service {
         } ~
         post{
             formFields("ref"){ ref =>
-                println("Post", ref)
                 pathPrefix("signup"){
                     pathPrefix("affiliate"){  
                         complete(signUp(ref).map{"OK: " + _})

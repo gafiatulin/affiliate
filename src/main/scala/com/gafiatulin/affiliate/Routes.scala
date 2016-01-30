@@ -16,31 +16,30 @@ trait Routes extends Service {
     def routes: Route = {
         def htmlContentType(str: String) = HttpEntity(ContentTypes.`text/html(UTF-8)`, str)
         def formFor(path: String, ref: Option[String]) = """<!doctype html><html><head><meta charset="utf-8"></head><body><form action="""" + path + ref.map("?ref=" + _).getOrElse("") +  """" method="post"><input type="submit" value="Register"></form></body></html>"""
-        
         pathPrefix("affiliate"){
             path(RestPath){ id =>
                 complete(statsFor(id.toString))
             }
         } ~
         get{
-            parameter("ref".?){ ref => 
-                ref.foreach(upV(_))
+            parameter("ref".?){ ref =>
+                upV(ref)
                 pathPrefix("signup"){
                     pathPrefix("affiliate"){
                         complete(htmlContentType(formFor("/signup/affiliate", ref)))
                     } ~
                     complete(htmlContentType(formFor("/signup", ref)))
                 }
-            }     
+            }
         } ~
         post{
             parameter("ref".?){ ref =>
                 pathPrefix("signup"){
-                    pathPrefix("affiliate"){  
-                        complete(signUp(ref getOrElse "").map{"OK: " + _})
-                    } ~ 
+                    pathPrefix("affiliate"){
+                        complete(signUp(ref))
+                    } ~
                     {
-                        complete(upR(ref getOrElse "").map{x => "Registred"})
+                        complete(upR(ref).map{x => "Registred"})
                     }
                 }
             }

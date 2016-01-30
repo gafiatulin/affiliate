@@ -4,43 +4,41 @@ import java.util.UUID
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
-import com.gafiatulin.affiliate.utils.Config
-import com.gafiatulin.affiliate.models.{RefCodeEntity, RefCodeEntityTable}
+import com.gafiatulin.affiliate.utils.{Config, RefValidator}
+import com.gafiatulin.affiliate.models._
 
 object Service extends Service
 
-trait Service extends RefCodeEntityTable with Config {
-
+trait Service extends Config with ActionTable with PartnerTable with RefValidator {
     import driver.api._
 
-    def getCodeById(id: String):Future[Option[RefCodeEntity]] = db.run(codes.filter(_.id === id).result.headOption)
-    def update(id: String, f: RefCodeEntity => RefCodeEntity):Future[Option[RefCodeEntity]] = getCodeById(id).flatMap{
-        case Some(code) =>
-            val updatedCode = f(code)
-            db.run(codes.filter(_.id === id).update(updatedCode)).map(_ => Some(updatedCode))
-        case None => Future.successful(None)
-    }
-    def insert(ce: RefCodeEntity): Future[RefCodeEntity] = {
-        val action = (codes returning codes) += ce
-        db.run(action)
+
+    def validateAbdRun(partner: Option[String], actionType: Byte) = {
+        if (valid(partner, refLength))
+            db.run(append(Action(partner.get, actionType)))
+        else Future.successful(None)
     }
 
-    def signUp(ref: String) = {
-        val duid = new UUID(UUID.nameUUIDFromBytes(databaseUrl.getBytes).getLeastSignificantBits,
-                            UUID.randomUUID.getLeastSignificantBits).toString.replaceAll("-", "")
-        val id = insert(RefCodeEntity(duid)).map{_.id}
-        id.flatMap(x => upPR(ref))
-        id
+    def append(x: Action) = {
+        actions += x
     }
 
-    def upV(id: String) = update(id, {x => x.copy(visits = x.visits + 1)})
+    def signUp(ref: Option[String]):String = {
+        val duid = databaseHash + UUID.randomUUID().toString.replaceAll("-", "")
+        db.run(partners += Partner(duid)).flatMap{_ => upPR(ref)}
+        duid
+    }
 
-    def upR(id: String) = update(id, {x => x.copy(regs = x.regs + 1)})
+    def upV(partner: Option[String]) =  validateAbdRun(partner, 0)
+    def upR(partner: Option[String]) =  validateAbdRun(partner, 1)
+    def upPR(partner: Option[String]) =  validateAbdRun(partner, 2)
 
-    def upPR(id: String) = update(id, {x => x.copy(partnerRegs = x.partnerRegs + 1)})
-
-    def statsFor(id: String) = getCodeById(id).map{
-        case Some(ce) => "Visits: " + ce.visits +  " Registrations: " + ce.regs + " Partner Regsistrations: " + ce.partnerRegs
-        case None => "No stats found for id: " + id
+    def statsFor(partner: String):Future[String] = {
+        val a = actions.filter(_.partner === partner).groupBy(_.actionType).map{case (x, l) => (x, l.length)}.result
+        db.run(a).map(_.map{
+            case (0, l) => s"Visits: $l"
+            case (1, l) => s"Registrations: $l"
+            case (2, l) => s"Partner Registrations: $l"
+        }.mkString(" "))
     }
 }

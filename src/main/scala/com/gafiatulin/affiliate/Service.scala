@@ -23,10 +23,11 @@ trait Service extends Config with ActionTable with PartnerTable with RefValidato
         actions += x
     }
 
-    def signUp(ref: Option[String]):String = {
+    def signUp(ref: Option[String]):Future[String] = {
         val duid = databaseHash + UUID.randomUUID().toString.replaceAll("-", "")
-        db.run(partners += Partner(duid)).flatMap{_ => upPR(ref)}
-        duid
+        db.run((partners returning partners.map(_.id)) += Partner(duid)).map{
+            id => upPR(ref)
+            id}
     }
 
     def upV(partner: Option[String]) =  validateAbdRun(partner, 0)

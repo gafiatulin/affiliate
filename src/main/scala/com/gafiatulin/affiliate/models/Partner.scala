@@ -1,9 +1,8 @@
 package com.gafiatulin.affiliate.models
 
-import java.util.UUID
 import com.gafiatulin.affiliate.utils.DatabaseConfig
 
-case class Partner(id: String = UUID.randomUUID().toString)
+case class Partner(id: String)
 
 trait PartnerTable extends DatabaseConfig {
     import driver.api._

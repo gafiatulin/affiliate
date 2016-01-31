@@ -1,6 +1,7 @@
 package com.gafiatulin.affiliate
 
-import java.util.UUID
+import java.util.concurrent.ThreadLocalRandom
+
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -24,7 +25,7 @@ trait Service extends Config with ActionTable with PartnerTable with RefValidato
     }
 
     def signUp(ref: Option[String]):Future[String] = {
-        val duid = databaseHash + UUID.randomUUID().toString.replaceAll("-", "")
+        val duid = databaseHash + (ThreadLocalRandom.current.nextLong | 0x1000000000000000L ).toHexString
         db.run((partners returning partners.map(_.id)) += Partner(duid)).map{
             id => upPR(ref)
             id}

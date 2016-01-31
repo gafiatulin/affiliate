@@ -2,9 +2,9 @@ package com.gafiatulin.affiliate.utils
 
 import org.flywaydb.core.Flyway
 
-trait Migration extends Config {
+trait Migration {
     private val flyway = new Flyway()
-    flyway.setDataSource(databaseUrl, databaseUser, databasePassword)
+    flyway.setDataSource(Config.databaseUrl, Config.databaseUser, Config.databasePassword)
     def migrate() = {
         flyway.migrate()
     }

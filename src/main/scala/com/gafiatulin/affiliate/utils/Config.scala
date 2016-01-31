@@ -16,5 +16,8 @@ trait Config {
     val databaseUrl = databaseConfig.getString("url")
     val databaseUser = databaseConfig.getString("user")
     val databasePassword = databaseConfig.getString("password")
+}
+
+case object Config extends Config{
     val databaseHash = scala.util.hashing.MurmurHash3.stringHash(databaseUrl+databaseUser+databasePassword).toHexString
 }

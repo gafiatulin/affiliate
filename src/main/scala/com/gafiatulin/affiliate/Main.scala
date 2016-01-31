@@ -1,17 +1,16 @@
 package com.gafiatulin.affiliate
 
-import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
-import akka.http.scaladsl.Http
+import akka.actor.{ActorSystem, Props}
+import akka.io.IO
+import spray.can.Http
 
-import com.gafiatulin.affiliate.utils.Migration 
+import com.gafiatulin.affiliate.utils.{Migration, Config}
 
-object Main extends App with Routes with Migration {
+object Main extends App with Migration with Config {
     implicit val system = ActorSystem()
-    implicit val ec = system.dispatcher
-    implicit val materializer = ActorMaterializer()
+    val handler = system.actorOf(Props[AffiliateServiceActor], name = "affiliate-service")
 
     reloadSchema()
-    
-    Http().bindAndHandle(routes, httpInterface, httpPort)
+
+    IO(Http) ! Http.Bind(handler, Config.httpInterface, Config.httpPort)
 }

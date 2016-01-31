@@ -11,7 +11,7 @@ object Main extends App with Routes with Migration {
     implicit val ec = system.dispatcher
     implicit val materializer = ActorMaterializer()
 
-    reloadSchema()
-    
+    migrate()
+
     Http().bindAndHandle(routes, httpInterface, httpPort)
 }

@@ -12,9 +12,9 @@ trait Routes extends Service {
     implicit def ec: ExecutionContext
     implicit def materializer: Materializer
 
+    def htmlContentType(str: String) = HttpEntity(ContentTypes.`text/html(UTF-8)`, str)
+    def formFor(path: String, ref: Option[String]) = """<!doctype html><html><head><meta charset="utf-8"></head><body><form action="""" + path + ref.map("?ref=" + _).getOrElse("") +  """" method="post"><input type="submit" value="Register"></form></body></html>"""
     def routes: Route = {
-        def htmlContentType(str: String) = HttpEntity(ContentTypes.`text/html(UTF-8)`, str)
-        def formFor(path: String, ref: Option[String]) = """<!doctype html><html><head><meta charset="utf-8"></head><body><form action="""" + path + ref.map("?ref=" + _).getOrElse("") +  """" method="post"><input type="submit" value="Register"></form></body></html>"""
         get{
             pathPrefix("affiliate"){
                 path(RestPath){ id =>

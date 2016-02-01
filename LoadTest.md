@@ -52,13 +52,13 @@
 
 Тестирование заняло 3 часа 51 минуту и 32 секунды:
 
-Общие параметры:
+##### Общие параметры:
 
 |Page requests|Hits|Bytes|Errors|User Iterations|
 |:-----------:|:--:|:---:|:----:|:-------------:|
 |3569810|3569810|1.27 GB|13|2287173|
 
-Пропускная способность:
+###### Пропускная способность:
 
 |Категория|Max|Avg|Min|
 |:-------:|:-:|:-:|:-:|
@@ -66,7 +66,7 @@
 |Hits per Second|567.00|257.08|0.00|
 |Bytes per Second|286737.00|98475.93|0.00|
 
-Время отклика:
+###### Время отклика:
 
 |Путь|Max(s)|Avg(s)|Min(s)|Total(s)|
 |:--:|:----:|:----:|:----:|:------:|
@@ -76,20 +76,25 @@
 |`/signup/affiliate`|1.66|0.16|0.01|107835.36|
 |`/signup/affiliate?ref=${code}`|1.68|0.16|0.01|107753.52|
 
-Ошибки:
+##### Ошибки:
 
 |Путь|Error| # |
 |:--:|:---:|:--:|
 |`/signup`|page load time exceeded|13|
 
-Графики:
+###### Основные графики:
 
-/*
+Среднго времени отклика по страницам (в сек):
+![Average Response Times by Page](https://s3.amazonaws.com/f.cl.ly/items/0i3z191h0r282Q313Y1H/Screen%20Shot%202016-02-01%20at%2012.36.40.png?v=a9469910)
 
-*/
+Пропускной способности сети (в Мб/сек):
+![Network Throughput](https://s3.amazonaws.com/f.cl.ly/items/3u0n270T162X3E2H1H30/Screen%20Shot%202016-02-01%20at%2012.37.08.png?v=d37c22eb)
 
-Автоматически сгенерированный файл: 
+Числа обработанных запросов (в запрос/сек):
+![Transaction Throughput](https://s3.amazonaws.com/f.cl.ly/items/2M3r153h062z1q330L1N/Screen%20Shot%202016-02-01%20at%2012.37.37.png?v=8fe8cd42)
 
-/*
+Ошибок по страницам:
+![Errors by Page](https://s3.amazonaws.com/f.cl.ly/items/0Y0F1t0l1u3x103S2I2Q/Screen%20Shot%202016-02-01%20at%2012.38.03.png?v=95ec3ddc)
 
-*/
+Эти и остальные графики доступны в интерактивной форме в [автоматически сгенерированном файле](http://htmlpreview.github.io/?https://gist.githubusercontent.com/gafiatulin/5101249c9a035758ba9c/raw/6d08cb9b593fc484aacebca0d33f752a076a9d62/Test.html).
+

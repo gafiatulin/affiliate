@@ -10,7 +10,7 @@ object Main extends App with Migration with Config {
     implicit val system = ActorSystem()
     val handler = system.actorOf(Props[AffiliateServiceActor], name = "affiliate-service")
 
-    reloadSchema()
+    migrate()
 
     IO(Http) ! Http.Bind(handler, Config.httpInterface, Config.httpPort)
 }

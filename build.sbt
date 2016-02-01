@@ -20,6 +20,7 @@ libraryDependencies ++= {
         "org.flywaydb"        %  "flyway-core"      % "3.2.1",
         "org.postgresql"      %  "postgresql"       % "9.4.1207.jre7",
         "org.scalatest"       %% "scalatest"        % scalaTestV       % "test",
+        "org.scalacheck"      %% "scalacheck"       % "1.12.5"         % "test",
         "io.spray"            %% "spray-testkit"    % sprayV           % "test"
     )
 }

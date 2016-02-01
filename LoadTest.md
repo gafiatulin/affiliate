@@ -77,6 +77,7 @@
 |`/signup/affiliate?ref=${code}`|1.68|0.16|0.01|107753.52|
 
 Ошибки:
+
 |Путь|Error| # |
 |:--:|:---:|:--:|
 |`/signup`|page load time exceeded|13|

@@ -20,7 +20,7 @@
 
 ### Зависимости
 
-* [Spray](http://spray.io) (Базовая версия основывается на  [akka-http](http://doc.akka.io/docs/akka-stream-and-http-experimental/2.0.3/scala.html) и находится [master](https://github.com/gafiatulin/affiliate/tree/master) бранче)
+* [Spray](http://spray.io) (Базовая версия основывается на  [akka-http](http://doc.akka.io/docs/akka-stream-and-http-experimental/2.0.3/scala.html) и находится в `master` бранче)
 * [PostgreSQL](http://www.postgresql.org)
 * [Slick](http://slick.typesafe.com)
 

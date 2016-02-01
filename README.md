@@ -24,7 +24,9 @@
 * [PostgreSQL](http://www.postgresql.org)
 * [Slick](http://slick.typesafe.com)
 
+### Нагрузочное тестирование
 
+Отчет о проведенном нагрузочном тестировании прототипа представлен в файле LoadTest.md
 
 -----
 

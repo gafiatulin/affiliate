@@ -4,8 +4,6 @@ version := "1.0"
 
 scalaVersion := "2.11.7"
 
-scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-feature")
-
 libraryDependencies ++= {
     val sprayV = "1.3.3"
     val slickV = "3.1.1"

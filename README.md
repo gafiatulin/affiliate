@@ -5,25 +5,28 @@
 Данный прототип лишь частично реализует предлагаемую архитектуру:
 * прототип является одноуровневым
 * в прототипе у партнера не множество кодов, а лишь один (он же и является `id` партнера).
-* в прототипе вместо списка действий для каждого вида действия, сохраняется только количество действий данного вида.
 
 ### Возможные пути
 * `GET /signup?ref=xxx` — Страница с кнопкой регистрации клиента
 * `GET /signup/affiliate?ref=xxx`— Страница с кнопкой регистрации партнера
 * `GET /affiliate/xxx` — Статистика по партнеру
-* `POST /signup Content-Type: "application/x-www-form-urlencoded; charset=utf-8" ref = xxx` — «Регистрация» партнера с опциональным `ref`
-* `POST /signup/affiliate Content-Type: "application/x-www-form-urlencoded; charset=utf-8" ref = xxx` — Регистрация партнера с опциональным `ref`
+* `POST /signup?ref=xxx` — «Регистрация» партнера с опциональным `ref`
+* `POST /signup/affiliate?ref=xxx` — Регистрация партнера с опциональным `ref`
 
 ### Действия сохранямые при наличии `ref`
-* Визит страницы `/signup` или `/signup/affiliate` — `visits`
+* Посещение страницы `/signup` или `/signup/affiliate`
 * «Регистрация» клиента
-* Рекистрация партнера
+* Регистрация партнера
 
 ### Зависимости
 
-* [akka-http](http://doc.akka.io/docs/akka-stream-and-http-experimental/2.0.3/scala.html)
+* [akka-http](http://doc.akka.io/docs/akka-stream-and-http-experimental/2.0.3/scala.html) ([Spray](http://spray.io)-based версия находится в отдельном [бранче](https://github.com/gafiatulin/affiliate/tree/affiliate-spray))
 * [PostgreSQL](http://www.postgresql.org)
 * [Slick](http://slick.typesafe.com)
+
+
+
+-----
 
 # Архитектура партнерской программы
 
